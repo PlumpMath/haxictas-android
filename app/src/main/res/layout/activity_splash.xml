@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:activity="org.appeyroad.bob.SplashActivity"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/ic_launcher_bob"/>
+
+    <ImageView
+        android:layout_width="192dp"
+        android:layout_height="128dp"
+        android:src="@drawable/logo_appeyroad"
+        android:tint="@color/primary_dark"/>
+
+</LinearLayout>
