@@ -23,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             = "(id INTEGER PRIMARY KEY, cafeteriaName TEXT, date TEXT, contents TEXT)";
 
     private static final String DATABASE = "SeoulNationalUniversity";
-    private static final int VERSION = 4;
+    private static final int VERSION = 5;
 
     private static DatabaseHelper instance;
     private static Context latestContext;
@@ -57,22 +57,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void insert(Cafeteria cafeteria) {
         insert(cafeteria, CAFETERIA);
-    }
-
-    public void renew(String unknown, String name) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL(String.format(
-                "UPDATE %s SET name = '%s' WHERE name = '%s';",
-                BOOKMARK, name, unknown
-        ));
-        db.execSQL(String.format(
-                "UPDATE %s SET name = '%s' WHERE name = '%s';",
-                CAFETERIA, name, unknown
-        ));
-        db.execSQL(String.format(
-                "UPDATE %s SET cafeteriaName = '%s' WHERE cafeteriaName = '%s';",
-                MENU, name, unknown
-        ));
     }
 
     public void delete(Cafeteria cafeteria){

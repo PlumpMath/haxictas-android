@@ -62,7 +62,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
                 title = activity.getString(R.string.main);
                 break;
             case ETC:
-                title = activity.getString(R.string.etc);
+                title = activity.getString(R.string.see_more);
                 break;
         }
         return title;

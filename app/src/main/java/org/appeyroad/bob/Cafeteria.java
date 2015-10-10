@@ -3,10 +3,8 @@ package org.appeyroad.bob;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class Cafeteria implements Parcelable {
 
@@ -16,8 +14,6 @@ public class Cafeteria implements Parcelable {
     private static final int LUNCH_TIME = 3;
     private static final int DINNER_TIME = 4;
     private static final int FIELDS_NUMBER = 5;
-
-    private static HashMap<String, Integer> hashMap;
 
     private String name;
     private String coordinate;
@@ -33,10 +29,6 @@ public class Cafeteria implements Parcelable {
         breakfastTime = source.readString();
         lunchTime = source.readString();
         dinnerTime = source.readString();
-    }
-
-    {
-        hashMap = new HashMap<>();
     }
 
     public static final Creator CREATOR = new Creator() {
@@ -93,55 +85,46 @@ public class Cafeteria implements Parcelable {
 
     public void parse(String source, Context context) {
         String[] dataSet;
+        String[] unknown = context.getResources().getStringArray(R.array.ERR);
 
-        if (source.contains("학생회관") || source.contains("63")) {
-            dataSet = context.getResources().getStringArray(R.array.학식);
-        } else if (source.contains("3식당") || source.contains("전망대")) {
-            dataSet = context.getResources().getStringArray(R.array.농식);
+        if (source.contains("학생회관")) {
+            dataSet = context.getResources().getStringArray(R.array.A01);
+        } else if (source.contains("3식당")) {
+            dataSet = context.getResources().getStringArray(R.array.A02);
         } else if (source.contains("아워홈")) {
-            dataSet = context.getResources().getStringArray(R.array.아워홈);
-        } else if (source.contains("기숙사") || source.contains("919")) {
-            dataSet = context.getResources().getStringArray(R.array.긱식);
-        } else if (source.contains("자하연") || source.contains("농협") || source.contains("109")) {
-            dataSet = context.getResources().getStringArray(R.array.자식);
-        } else if (source.contains("제2공학관") || source.contains("302")) {
-            dataSet = context.getResources().getStringArray(R.array.삼백이);
-        } else if (source.contains("솔밭") || source.contains("110")) {
-            dataSet = context.getResources().getStringArray(R.array.솔밭);
+            dataSet = context.getResources().getStringArray(R.array.B09);
+        } else if (source.contains("919")) {
+            dataSet = context.getResources().getStringArray(R.array.A03);
+        } else if (source.contains("자하연")) {
+            dataSet = context.getResources().getStringArray(R.array.A04);
+        } else if ( source.contains("302")) {
+            dataSet = context.getResources().getStringArray(R.array.A05);
+        } else if (source.contains("솔밭")) {
+            dataSet = context.getResources().getStringArray(R.array.A06);
         } else if (source.contains("동원관")) {
-            dataSet = context.getResources().getStringArray(R.array.동원관);
-        } else if (source.contains("감골") || source.contains("101")) {
-            dataSet = context.getResources().getStringArray(R.array.감골);
-        } else if (source.contains("서당골") || source.contains("4식당") || source.contains("76")) {
-            dataSet = context.getResources().getStringArray(R.array.사식);
+            dataSet = context.getResources().getStringArray(R.array.A07);
+        } else if (source.contains("감골")) {
+            dataSet = context.getResources().getStringArray(R.array.A08);
+        } else if (source.contains("4식당")) {
+            dataSet = context.getResources().getStringArray(R.array.B01);
         } else if (source.contains("두레미담")) {
-            dataSet = context.getResources().getStringArray(R.array.두레);
-        } else if (source.contains("제1공학관") || source.contains("301")) {
-            dataSet = context.getResources().getStringArray(R.array.삼백일);
-        } else if (source.contains("교수회관") || source.contains("65")) {
-            dataSet = context.getResources().getStringArray(R.array.교수회관);
-        } else if (source.contains("비비고") || source.contains("501")) {
-            dataSet = context.getResources().getStringArray(R.array.비비고);
-        } else if (source.contains("공대간이") || source.contains("30-2")) {
-            dataSet = context.getResources().getStringArray(R.array.공깡);
+            dataSet = context.getResources().getStringArray(R.array.B02);
+        } else if (source.contains("301")) {
+            dataSet = context.getResources().getStringArray(R.array.B03);
+        } else if (source.contains("샤반")) {
+            dataSet = context.getResources().getStringArray(R.array.B04);
+        } else if (source.contains("공대간이")) {
+            dataSet = context.getResources().getStringArray(R.array.B05);
         } else if (source.contains("소담마루")) {
-            dataSet = context.getResources().getStringArray(R.array.소담마루);
-        } else if (source.contains("연구동") || source.contains("220")) {
-            dataSet = context.getResources().getStringArray(R.array.이백이십);
+            dataSet = context.getResources().getStringArray(R.array.B06);
+        } else if (source.contains("220")) {
+            dataSet = context.getResources().getStringArray(R.array.B07);
         } else if (source.contains("라운지오")) {
-            dataSet = context.getResources().getStringArray(R.array.라운지오);
+            dataSet = context.getResources().getStringArray(R.array.B08);
         } else if (source.contains("예술계")) {
-            dataSet = context.getResources().getStringArray(R.array.예술계);
+            dataSet = context.getResources().getStringArray(R.array.B10);
         } else {
-            Log.w("C", "unknown: " + source);
-            dataSet = context.getResources().getStringArray(R.array.불명);
-            if (source.contains(dataSet[NAME])) {
-                dataSet[NAME] = source;
-            } else {
-                if (!hashMap.containsKey(source))
-                    hashMap.put(source, hashMap.size() + 1);
-                dataSet[NAME] += hashMap.get(source);
-            }
+            dataSet = unknown;
         }
 
         if (dataSet != null && dataSet.length == FIELDS_NUMBER) {
@@ -150,6 +133,9 @@ public class Cafeteria implements Parcelable {
             breakfastTime = dataSet[BREAKFAST_TIME];
             lunchTime = dataSet[LUNCH_TIME];
             dinnerTime = dataSet[DINNER_TIME];
+            if (dataSet == unknown) {
+                name = source;
+            }
         } else {
             try {
                 throw new Exception("WrongParseException: " + source);

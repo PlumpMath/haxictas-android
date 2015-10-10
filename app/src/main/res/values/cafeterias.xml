@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- name, coordinate, breakfastTime, lunchTime, dinnerTime -->
+    <string-array name="A01">
+        <item>학생회관식당 63동</item>
+        <item>37.459297,126.950592</item>
+        <item>비 8–10</item>
+        <item>에이비 11–14 씨 10–16.5 지하 11–13.5 주말 11–14</item>
+        <item>에이 16.5–19 비 17–19 씨 17.5–21.5 주말 17–19"</item>
+    </string-array>
+    <string-array name="A02">
+        <item>전망대3식당 75–1동</item>
+        <item>37.456418,126.948524</item>
+        <item />
+        <item>삼층 11–14 사층 11.5–13.5</item>
+        <item>사층 17–19</item>
+    </string-array>
+    <string-array name="A03">
+        <item>기숙사식당 919동</item>
+        <item>37.463249,126.958413</item>
+        <item>7.5–9.5 방학중 8–9.5 휴일 8–9.5</item>
+        <item>11.5–13.5</item>
+        <item>17.5–19.5</item>
+    </string-array>
+    <string-array name="A04">
+        <item>자하연식당 109동</item>
+        <item>37.460923,126.952533</item>
+        <item />
+        <item>이층 11–14 삼층 11.5–</item>
+        <item>이층 17–19 삼층 –19</item>
+    </string-array>
+    <string-array name="A05">
+        <item>302동식당 제2공학관</item>
+        <item>37.448665,126.952541</item>
+        <item />
+        <item>11.25–14</item>
+        <item>17–19</item>
+    </string-array>
+    <string-array name="A06">
+        <item>솔밭식당 110동</item>
+        <item>37.458164,126.954008</item>
+        <item />
+        <item />
+        <item />
+    </string-array>
+    <string-array name="A07">
+        <item>동원관식당 113동</item>
+        <item>37.465029,126.951647</item>
+        <item />
+        <item>학기중 11–14 방학중 11–13.5</item>
+        <item>17–19</item>
+    </string-array>
+    <string-array name="A08">
+        <item>감골식당 101동</item>
+        <item>37.463248,126.950195</item>
+        <item />
+        <item>세트 11–14 채식뷔페 11.5–13.5</item>
+        <item>세트 17–18.5</item>
+    </string-array>
+    <string-array name="B01">
+        <item>4식당 76동</item>
+        <item>37.460695,126.955644</item>
+        <item />
+        <item>일층 11–14 이층 11.5–</item>
+        <item>일층 17–18.5 이층 –19</item>
+    </string-array>
+    <string-array name="B02">
+        <item>두레미담 75–1동</item>
+        <item>37.456418,126.948524</item>
+        <item />
+        <item>11.5–</item>
+        <item>–21</item>
+    </string-array>
+    <string-array name="B03">
+        <item>301동식당 제1공학관</item>
+        <item>37.449836,126.952477</item>
+        <item>일층분식 8–</item>
+        <item>일층세트 11–14 이층 11.5–13.5</item>
+        <item>일층분식 –19 일층세트 17–19</item>
+    </string-array>
+    <string-array name="B04">
+        <item>샤반 501동</item>
+        <item>37.460123,126.948537</item>
+        <item />
+        <item>11– 연중무휴</item>
+        <item>–22 연중무휴</item>
+    </string-array>
+    <string-array name="B05">
+        <item>공대간이식당 30–2동</item>
+        <item>37.457237,126.950785</item>
+        <item />
+        <item />
+        <item />
+    </string-array>
+    <string-array name="B06">
+        <item>소담마루 113동</item>
+        <item>37.465029,126.951647</item>
+        <item />
+        <item />
+        <item />
+    </string-array>
+    <string-array name="B07">
+        <item>220동식당</item>
+        <item>37.464226,126.954117</item>
+        <item>8–10</item>
+        <item>11–14</item>
+        <item>17–19</item>
+    </string-array>
+    <string-array name="B08">
+        <item>라운지오 113동</item>
+        <item>37.465029,126.951647</item>
+        <item />
+        <item />
+        <item />
+    </string-array>
+    <string-array name="B09">
+        <item>아워홈 기숙사</item>
+        <item>37.463249,126.958413</item>
+        <item>7.5–9.5</item>
+        <item>11.5–13.5</item>
+        <item>17.5–19.5</item>
+    </string-array>
+    <string-array name="B10">
+        <item>예술계식당 74동</item>
+        <item>37.461886,126.953004</item>
+        <item />
+        <item />
+        <item />
+    </string-array>
+    <string-array name="ERR">
+        <item>알수없는식당</item>
+        <item>37.4580767,126.9536907</item>
+        <item />
+        <item />
+        <item />
+    </string-array>
+</resources>

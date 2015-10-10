@@ -15,6 +15,10 @@ public class Date extends GregorianCalendar implements Comparable<Calendar>, Par
         super(year, month, day);
     }
 
+    public Date(Date date) {
+        this(date.get(YEAR), date.get(MONTH), date.get(DATE));
+    }
+
     public Date(String source) {
         super();
         source = source.replaceAll("[^0-9]", "");

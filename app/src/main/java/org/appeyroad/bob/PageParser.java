@@ -11,7 +11,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
 import java.util.List;
 
 public class PageParser {
@@ -67,56 +67,105 @@ public class PageParser {
                 }
 
                 List<Cafeteria> storedCafeterias;
-                List<Cafeteria> newCafeterias = new ArrayList<>();
+                //List<Cafeteria> newCafeterias = new ArrayList<>();
                 List<Cafeteria> aliveCafeterias = new ArrayList<>();
+
+                // 아워홈
+                Cafeteria ourHome = new Cafeteria();
+                ourHome.parse("아워홈", activity.getApplicationContext());
+                helper.insert(ourHome);
+                aliveCafeterias.add(ourHome);
+
+                // 이전 주와 이번 주, 다음 주에 대하여
+                for (int week : new int[] {0, -1, 1}) {
+                    Date dateInWeek = Date.today();
+                    dateInWeek.add(Calendar.WEEK_OF_YEAR, week);
+
+                    if (helper.getMenu(ourHome, dateInWeek) != null) {
+                        Log.d("PP", "OurHome data duplicated");
+                        continue;
+                    }
+
+                    url = "http://dorm.snu.ac.kr/dk_board/facility/food.php?start_date2="
+                            + (Date.today().getTimeInMillis() / 1000 + week * 604800);
+                    document = Jsoup.connect(url).get();
+                    Elements tds = document.select(".t_col td");
+
+                    List<DailyMenu> weeklyMenus = new ArrayList<>();
+
+                    Date date;
+                    for (int dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+                        DailyMenu dailyMenu = new DailyMenu();
+                        dailyMenu.setCafeteriaName(ourHome.getName());
+
+                        date = new Date(dateInWeek);
+                        while (date.get(Calendar.DAY_OF_WEEK) != dayOfWeek + 1) {
+                            date.add(Calendar.DAY_OF_WEEK, -1);
+                        }
+                        dailyMenu.setDate(date);
+
+                        weeklyMenus.add(dailyMenu);
+                    }
+                    int meal = -1;
+                    int dayOfWeek = -1;
+                    // 그 주의 모든 날과 시간대의 메뉴에 대하여
+                    for (int i = 0; i < tds.size(); i++) {
+                        Element td = tds.get(i);
+                        if (td.text().equals("비고")) break;
+                        else if (td.text().equals("아침")) meal = DailyMenu.BREAKFAST;
+                        else if (td.text().equals("점심")) meal = DailyMenu.LUNCH;
+                        else if (td.text().equals("저녁")) meal = DailyMenu.DINNER;
+                        else if (td.text().equals("가마")
+                                | td.text().equals("인터쉐프")
+                                | td.text().equals("해피존")
+                                | td.text().equals("아워홈")
+                                | td.text().equals("919동"))
+                            continue;
+                        else {
+                            String content;
+                            if (td.getElementsByTag("li") != null && td.getElementsByTag("li").size() > 0) {
+                                String className = td.getElementsByTag("li").get(0).className();
+                                Element board = document.getElementsByClass("board").get(0);
+                                String price;
+                                if (className != null && className.length() > 0
+                                        && board.getElementsByClass(className).size() > 0) {
+                                    price = board.getElementsByClass(className).get(0).text().replaceAll("원", "");
+                                } else {
+                                    price = activity.getString(R.string.unknown);
+                                }
+
+                                String menu = td.text()
+                                        .replaceAll("^[^가-힣0-9]", "")
+                                        .replaceAll("[(].*?[)]", " ")
+                                        .replaceAll("([가-힣])[^가-힣 ]([가-힣])", "$1 $2")
+                                        .replaceAll("[^가-힣 ]", "")
+                                        .replaceAll("<.+>", "");
+
+                                content = String.format("<%s> %s ", price, menu);
+                            } else {
+                                content = null;
+                            }
+
+                            dayOfWeek = ++dayOfWeek % 7;
+                            weeklyMenus.get(dayOfWeek).setContent(meal, content, activity.getString(R.string.unknown));
+                        }
+                    }
+
+                    for (DailyMenu dailyMenu : weeklyMenus) {
+                        helper.insert(dailyMenu);
+                    }
+                }
+
 
                 // 인자로 받은 각각의 날짜에 대하여
                 for (Date date : dates) {
-                // 그 날의 정보가 완전히 있다면
+                    // 그 날의 정보가 완전히 있다면
                     List<DailyMenu> dailyInfo = helper.getMenus(date);
-                    if (dailyInfo.size() > 0 && dailyInfo.size() >= helper.getAllCafeterias().size()) {
+                    if (dailyInfo.size() > 1 && dailyInfo.size() >= helper.getAllCafeterias().size()) {
                         continue;
                     }
 
                     storedCafeterias = helper.getAllCafeterias();
-
-                    // 아워홈
-                    String contents[] = new String[] {"", "", ""};
-                    // 각각의 끼니에 대하여
-                    for (int i = 0; i < 3; i++) {
-                        url = "http://emenu.ourhome.co.kr/meal/list.action" +
-                                "?tempcd=31abebdcf2bb7fa767c0f9fb4d95d0a1" +
-                                "&offerdt=" + date.toString().replaceAll("[^0-9]", "") +
-                                "&up_yn=" +
-                                "&up_busiplcd=31abebdcf2bb7fa767c0f9fb4d95d0a1&busiord=" +
-                                "&mealclass=" + (i + 1) +
-                                "&conner=A";
-                        document = Jsoup.connect(url).post();
-                        Elements tables = document.select(".menuT");
-
-                        // 각각의 섹션(가마, 인터쉐프, 해피존)에 대하여
-                        for (int j = 0; j < tables.size(); j++) {
-                            String section = document.select(".conTitle span").get(j).text();
-                            String menu = tables.get(j).text()
-                                    .replaceAll("^[^가-힣0-9]", "")
-                                    .replaceAll("[(].*?[)]", " ")
-                                    .replaceAll("([가-힣])[^가-힣 ]([가-힣])", "$1 $2")
-                                    .replaceAll("[^가-힣 ]", "")
-                                    .replace("메뉴안내", "");
-                            if (menu.contains(" ") && menu.split(" ").length > 2) menu = menu.split(" ")[0] + " " + menu.split(" ")[1];
-                            contents[i] += String.format("<%s> %s ", section, menu);
-                        }
-                    }
-                    Cafeteria ourHome = new Cafeteria();
-                    ourHome.parse("아워홈", activity.getApplicationContext());
-                    helper.insert(ourHome);
-                    aliveCafeterias.add(ourHome);
-
-                    DailyMenu dailyMenu = new DailyMenu();
-                    dailyMenu.setCafeteriaName(ourHome.getName());
-                    dailyMenu.setDate(date);
-                    dailyMenu.setContents(contents, activity.getString(R.string.unknown));
-                    helper.insert(dailyMenu);
 
                     // 직영 식당의 오늘 메뉴
                     url = "http://snuco.com/html/restaurant/restaurant_menu1.asp?date=";
@@ -163,30 +212,25 @@ public class PageParser {
                             }
                             todayMenu += text + DailyMenu.SEPARATOR;
                         }
-                        dailyMenu = new DailyMenu();
+                        DailyMenu dailyMenu = new DailyMenu();
                         dailyMenu.setCafeteriaName(cafeteria.getName());
                         dailyMenu.setDate(date);
                         dailyMenu.setContents(todayMenu.substring(0, todayMenu.length() - 1), activity.getString(R.string.unknown));
                         helper.insert(dailyMenu);
                     }
 
+                    /*
                     for (Cafeteria aliveCafeteria : aliveCafeterias) {
                         if (!storedCafeterias.contains(aliveCafeteria)) {
                             newCafeterias.add(aliveCafeteria);
                         }
                     }
-                    int i = 0;
+                    */
+
                     storedCafeterias = helper.getAllCafeterias();
                     for (Cafeteria storedCafeteria : storedCafeterias) {
                         if (!aliveCafeterias.contains(storedCafeteria)) {
-                            String unknown = activity.getResources().getStringArray(R.array.불명)[0];
-                            if (storedCafeteria.getName().contains(unknown)) {
-                                if (newCafeterias.size() > 0) {
-                                    helper.delete(storedCafeteria);
-                                }
-                            } else {
-                                helper.delete(storedCafeteria);
-                            }
+                            helper.delete(storedCafeteria);
                             activity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

@@ -61,27 +61,40 @@ public class DailyMenu implements Comparable<DailyMenu>, Parcelable {
                 throw new Exception("InvalidMenuArgumentException: " + contents.length);
             }
             for (int i = 0; i < contents.length; i++) {
-                String item = contents[i]
-                        .replace("ⓐ", "<1700>")
-                        .replace("ⓑ", "<2000>")
-                        .replace("ⓒ", "<2500>")
-                        .replace("ⓓ", "<3000>")
-                        .replace("ⓔ", "<3500>")
-                        .replace("ⓕ", "<4000>")
-                        .replace("ⓖ", "<4500>")
-                        .replace("ⓗ", "<기타>")
-                        .replaceAll("[,/()&]", " ")
-                        .replaceAll("( |>) +", "$1")
-                        .replaceAll("[^가-힣0-9<> ]", "")
-                        .trim();
-                if (item.equals("")) {
-                    item = unknown;
-                }
+                String item = format(contents[i], unknown);
                 this.contents[i] = item;
             }
         } catch (Exception e) {
             Log.e("Menu", e.toString(), e);
         }
+    }
+
+    public void setContent(int order, String content, String unknown) {
+        if (contents[order] == null) {
+            contents[order] = format(content, unknown);
+        } else if (!format(content, unknown).equals(unknown)){
+            contents[order] += " " + format(content, unknown);
+        }
+    }
+
+    private String format(String string, String unknown) {
+        if (string == null) return unknown;
+        string = string
+                .replaceAll(" ([0-9]+) ", " <$1> ")
+                .replace("ⓐ", "<1700>")
+                .replace("ⓑ", "<2000>")
+                .replace("ⓒ", "<2500>")
+                .replace("ⓓ", "<3000>")
+                .replace("ⓔ", "<3500>")
+                .replace("ⓕ", "<4000>")
+                .replace("ⓖ", "<4500>")
+                .replace("ⓗ", "<기타>")
+                .replaceAll("[,/()&]", " ")
+                .replaceAll("( |>) +", "$1")
+                .replaceAll("[^가-힣0-9<> ]", "")
+                .replaceAll("  ", " ")
+                .trim();
+        return string.equals("") ? unknown : string;
     }
 
     public String getContents() {
