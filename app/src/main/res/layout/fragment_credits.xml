@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tile_00"
     android:padding="@dimen/grid_spacing"
     android:layout_margin="@dimen/grid_spacing"
     android:orientation="vertical"
@@ -14,7 +13,8 @@
         android:layout_width="200dp"
         android:layout_height="70dp"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/logo_appeyroad"/>
+        android:src="@drawable/logo_appeyroad"
+        android:tint="@color/primary"/>
 
     <LinearLayout
         android:id="@+id/info"
@@ -24,19 +24,20 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="4dp"
-        android:background="@color/white12"
+        android:background="@drawable/bg_tile"
         android:gravity="center">
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:padding="4dp"
-            android:src="@drawable/ic_info"/>
+            android:src="@drawable/ic_info"
+            android:tint="@color/accent"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/info"
             android:textSize="15sp"
-            android:textColor="@color/white100"/>
+            android:textColor="@color/black87"/>
     </LinearLayout>
 
     <LinearLayout
@@ -47,19 +48,20 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="4dp"
-        android:background="@color/white12"
+        android:background="@drawable/bg_tile"
         android:gravity="center">
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:padding="4dp"
-            android:src="@drawable/ic_mail"/>
+            android:src="@drawable/ic_mail"
+            android:tint="@color/accent"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/email"
+            android:text="@string/send_message"
             android:textSize="15sp"
-            android:textColor="@color/white100"/>
+            android:textColor="@color/black87"/>
     </LinearLayout>
 
     <LinearLayout
@@ -70,19 +72,20 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="4dp"
-        android:background="@color/white12"
+        android:background="@drawable/bg_tile"
         android:gravity="center">
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:padding="4dp"
-            android:src="@drawable/ic_facebook"/>
+            android:src="@drawable/ic_facebook"
+            android:tint="@color/accent"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/facebook"
             android:textSize="15sp"
-            android:textColor="@color/white100"/>
+            android:textColor="@color/black87"/>
     </LinearLayout>
 
     <LinearLayout
@@ -93,7 +96,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="4dp"
-        android:background="@color/white100"
+        android:background="@drawable/bg_tile"
         android:gravity="center">
         <TextView
             android:id="@+id/view_mode_text"
@@ -101,8 +104,7 @@
             android:layout_height="wrap_content"
             android:text="@string/view_mode_simple"
             android:textSize="15sp"
-            android:textColor="@color/tile_00"
-            android:textStyle="bold"/>
+            android:textColor="@color/black87"/>
     </LinearLayout>
 
 </LinearLayout>

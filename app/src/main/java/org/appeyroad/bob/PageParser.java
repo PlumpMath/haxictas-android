@@ -67,12 +67,11 @@ public class PageParser {
                 }
 
                 List<Cafeteria> storedCafeterias;
-                //List<Cafeteria> newCafeterias = new ArrayList<>();
                 List<Cafeteria> aliveCafeterias = new ArrayList<>();
 
                 // 아워홈
                 Cafeteria ourHome = new Cafeteria();
-                ourHome.parse("아워홈", activity.getApplicationContext());
+                ourHome.identifyBy("아워홈", activity.getApplicationContext());
                 helper.insert(ourHome);
                 aliveCafeterias.add(ourHome);
 
@@ -81,8 +80,9 @@ public class PageParser {
                     Date dateInWeek = Date.today();
                     dateInWeek.add(Calendar.WEEK_OF_YEAR, week);
 
-                    if (helper.getMenu(ourHome, dateInWeek) != null) {
-                        Log.d("PP", "OurHome data duplicated");
+                    DailyMenu existingData = helper.getMenu(ourHome, dateInWeek);
+                    String empty = DailyMenu.SEPARATOR + DailyMenu.SEPARATOR;
+                    if (existingData != null && !existingData.getContents().equals(empty)){
                         continue;
                     }
 
@@ -96,11 +96,11 @@ public class PageParser {
                     Date date;
                     for (int dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
                         DailyMenu dailyMenu = new DailyMenu();
-                        dailyMenu.setCafeteriaName(ourHome.getName());
+                        dailyMenu.setCafeteriaCode(ourHome.getCode());
 
                         date = new Date(dateInWeek);
                         while (date.get(Calendar.DAY_OF_WEEK) != dayOfWeek + 1) {
-                            date.add(Calendar.DAY_OF_WEEK, -1);
+                            date.add(Calendar.DAY_OF_WEEK, 1);
                         }
                         dailyMenu.setDate(date);
 
@@ -147,12 +147,12 @@ public class PageParser {
                             }
 
                             dayOfWeek = ++dayOfWeek % 7;
-                            weeklyMenus.get(dayOfWeek).setContent(meal, content, activity.getString(R.string.unknown));
+                            weeklyMenus.get(dayOfWeek).setContent(meal, content);
                         }
                     }
 
                     for (DailyMenu dailyMenu : weeklyMenus) {
-                        helper.insert(dailyMenu);
+                        if (helper.getMenu(ourHome, dailyMenu.getDate()) == null) helper.insert(dailyMenu);
                     }
                 }
 
@@ -164,8 +164,6 @@ public class PageParser {
                     if (dailyInfo.size() > 1 && dailyInfo.size() >= helper.getAllCafeterias().size()) {
                         continue;
                     }
-
-                    storedCafeterias = helper.getAllCafeterias();
 
                     // 직영 식당의 오늘 메뉴
                     url = "http://snuco.com/html/restaurant/restaurant_menu1.asp?date=";
@@ -200,7 +198,7 @@ public class PageParser {
                         }
 
                         Cafeteria cafeteria = new Cafeteria();
-                        cafeteria.parse(rows.get(0).text(), activity.getApplicationContext());
+                        cafeteria.identifyBy(rows.get(0).text(), activity.getApplicationContext());
                         helper.insert(cafeteria);
                         aliveCafeterias.add(cafeteria);
 
@@ -213,19 +211,11 @@ public class PageParser {
                             todayMenu += text + DailyMenu.SEPARATOR;
                         }
                         DailyMenu dailyMenu = new DailyMenu();
-                        dailyMenu.setCafeteriaName(cafeteria.getName());
+                        dailyMenu.setCafeteriaCode(cafeteria.getCode());
                         dailyMenu.setDate(date);
-                        dailyMenu.setContents(todayMenu.substring(0, todayMenu.length() - 1), activity.getString(R.string.unknown));
+                        dailyMenu.setContents(todayMenu.substring(0, todayMenu.length() - 1));
                         helper.insert(dailyMenu);
                     }
-
-                    /*
-                    for (Cafeteria aliveCafeteria : aliveCafeterias) {
-                        if (!storedCafeterias.contains(aliveCafeteria)) {
-                            newCafeterias.add(aliveCafeteria);
-                        }
-                    }
-                    */
 
                     storedCafeterias = helper.getAllCafeterias();
                     for (Cafeteria storedCafeteria : storedCafeterias) {

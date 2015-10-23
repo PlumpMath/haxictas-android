@@ -16,9 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/hello_world"
-        android:textColor="@color/white100"
+        android:textColor="@color/black87"
         android:textSize="16sp"
-        android:textStyle="bold"
         android:singleLine="true"
         android:ellipsize="none"/>
     <ImageView

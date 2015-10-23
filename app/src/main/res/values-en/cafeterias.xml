@@ -4,39 +4,39 @@
     <!-- name, coordinate, breakfastTime, lunchTime, dinnerTime -->
     <string-array name="A01">
         <item>A01</item>
-        <item>63동 학생회관</item>
+        <item>63 Student CTR</item>
         <item>37.459297,126.950592</item>
-        <item>비 8–10</item>
-        <item>에이비 11–14 씨 10–16.5 지하 11–13.5 주말 11–14</item>
-        <item>에이 16.5–19 비 17–19 씨 17.5–21.5 주말 17–19"</item>
+        <item>B 8–10</item>
+        <item>AB 11–14 C 10–16.5 B1F 11–13.5 Wknd 11–14</item>
+        <item>A 16.5–19 B 17–19 C 17.5–21.5 Wknd 17–19"</item>
     </string-array>
     <string-array name="A02">
         <item>A02</item>
-        <item>75–1동 전망대3식당</item>
+        <item>75–1 3rd</item>
         <item>37.456418,126.948524</item>
         <item />
-        <item>삼층 11–14 사층 11.5–13.5</item>
-        <item>사층 17–19</item>
+        <item>3F 11–14 4F 11.5–13.5</item>
+        <item>4F 17–19</item>
     </string-array>
     <string-array name="A03">
         <item>A03</item>
-        <item>919동 기숙사</item>
+        <item>919 Gwanaksa</item>
         <item>37.463249,126.958413</item>
-        <item>7.5–9.5 방학중 8–9.5 휴일 8–9.5</item>
+        <item>7.5–9.5 Vac 8–9.5 Hol 8–9.5</item>
         <item>11.5–13.5</item>
         <item>17.5–19.5</item>
     </string-array>
     <string-array name="A04">
         <item>A04</item>
-        <item>109동 자하연식당</item>
+        <item>109 Jahayon</item>
         <item>37.460923,126.952533</item>
         <item />
-        <item>이층 11–14 삼층 11.5–</item>
-        <item>이층 17–19 삼층 –19</item>
+        <item>2F 11–14 3F 11.5–</item>
+        <item>2F 17–19 3F –19</item>
     </string-array>
     <string-array name="A05">
         <item>A05</item>
-        <item>302동식당 제2공학관</item>
+        <item>302 COE</item>
         <item>37.448665,126.952541</item>
         <item />
         <item>11.25–14</item>
@@ -44,7 +44,7 @@
     </string-array>
     <string-array name="A06">
         <item>A06</item>
-        <item>110동 솔밭식당</item>
+        <item>110 Solbat</item>
         <item>37.458164,126.954008</item>
         <item />
         <item />
@@ -52,31 +52,31 @@
     </string-array>
     <string-array name="A07">
         <item>A07</item>
-        <item>113동 동원관</item>
+        <item>113 Dongwon</item>
         <item>37.465029,126.951647</item>
         <item />
-        <item>학기중 11–14 방학중 11–13.5</item>
+        <item>Sem 11–14 Vac 11–13.5</item>
         <item>17–19</item>
     </string-array>
     <string-array name="A08">
         <item>A08</item>
-        <item>101동 감골식당</item>
+        <item>101 Gamgol</item>
         <item>37.463248,126.950195</item>
         <item />
-        <item>세트 11–14 채식뷔페 11.5–13.5</item>
-        <item>세트 17–18.5</item>
+        <item>Set 11–14 Veg Buffet 11.5–13.5</item>
+        <item>Set 17–18.5</item>
     </string-array>
     <string-array name="B01">
         <item>B01</item>
-        <item>76동 4식당</item>
+        <item>76 4th</item>
         <item>37.460695,126.955644</item>
         <item />
-        <item>일층 11–14 이층 11.5–</item>
-        <item>일층 17–18.5 이층 –19</item>
+        <item>1F 11–14 2F 11.5–</item>
+        <item>1F 17–18.5 2F –19</item>
     </string-array>
     <string-array name="B02">
         <item>B02</item>
-        <item>75–1동 두레미담</item>
+        <item>75–1 Duremidam</item>
         <item>37.456418,126.948524</item>
         <item />
         <item>11.5–</item>
@@ -84,23 +84,23 @@
     </string-array>
     <string-array name="B03">
         <item>B03</item>
-        <item>301동 제1공학관</item>
+        <item>301 COE</item>
         <item>37.449836,126.952477</item>
-        <item>일층분식 8–</item>
-        <item>일층세트 11–14 이층 11.5–13.5</item>
-        <item>일층분식 –19 일층세트 17–19</item>
+        <item>1F Snack 8–</item>
+        <item>1F Set 11–14 2F 11.5–13.5</item>
+        <item>1F Snack –19 1F Set 17–19</item>
     </string-array>
     <string-array name="B04">
         <item>B04</item>
-        <item>501동 샤반</item>
+        <item>501 Shaban</item>
         <item>37.460123,126.948537</item>
         <item />
-        <item>11–14.5 연중무휴</item>
-        <item>16.3–20 연중무휴</item>
+        <item>11–14.5 365/YR</item>
+        <item>16.5–20 365/YR</item>
     </string-array>
     <string-array name="B05">
         <item>B05</item>
-        <item>30–2동 공대간이식당</item>
+        <item>30–2 Snack Bar</item>
         <item>37.457237,126.950785</item>
         <item />
         <item />
@@ -108,7 +108,7 @@
     </string-array>
     <string-array name="B06">
         <item>B06</item>
-        <item>113동 소담마루</item>
+        <item>113 Sodam\'maru</item>
         <item>37.465029,126.951647</item>
         <item />
         <item />
@@ -116,7 +116,7 @@
     </string-array>
     <string-array name="B07">
         <item>B07</item>
-        <item>220동식당</item>
+        <item>220 CLS</item>
         <item>37.464226,126.954117</item>
         <item>8–10</item>
         <item>11–14</item>
@@ -124,7 +124,7 @@
     </string-array>
     <string-array name="B08">
         <item>B08</item>
-        <item>113동 라운지오</item>
+        <item>113 Lounge\'O</item>
         <item>37.465029,126.951647</item>
         <item />
         <item />
@@ -132,7 +132,7 @@
     </string-array>
     <string-array name="B09">
         <item>B09</item>
-        <item>기숙사 아워홈</item>
+        <item>Gwanaksa OurHome</item>
         <item>37.463249,126.958413</item>
         <item>7.5–9.5</item>
         <item>11.5–13.5</item>
@@ -140,15 +140,15 @@
     </string-array>
     <string-array name="B10">
         <item>B10</item>
-        <item>74동 예술계식당</item>
+        <item>74 ARC</item>
         <item>37.461886,126.953004</item>
         <item />
         <item />
         <item />
     </string-array>
-    <string-array name="UNK">
-        <item>UNK</item>
-        <item>알수없는식당</item>
+    <string-array name="ERR">
+        <item>ERR</item>
+        <item>Unknown Cafeteria</item>
         <item>37.4580767,126.9536907</item>
         <item />
         <item />

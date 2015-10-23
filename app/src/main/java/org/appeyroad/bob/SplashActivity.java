@@ -75,7 +75,7 @@ public class SplashActivity extends Activity {
     }
 
     public void tryGettingTodayData(final Handler handler) {
-        if (helper.getMenus(Date.today()).size() == 0 && !isConnected()) {
+        if (helper.getMenus(Date.today()).size() < 2 && !isConnected()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.no_data_today)
                     .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
@@ -83,7 +83,7 @@ public class SplashActivity extends Activity {
                             tryGettingTodayData(handler);
                         }
                     })
-                    .setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.quit, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             finish();
                         }

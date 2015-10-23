@@ -15,14 +15,14 @@ public class DailyMenu implements Comparable<DailyMenu>, Parcelable {
     public static final String SEPARATOR = "|";
     private static final String DUMMY = "-";
 
-    private String cafeteriaName;
+    private String cafeteriaCode;
     private Date date;
     private String[] contents = new String[3];
 
     public DailyMenu() {}
 
     private DailyMenu(Parcel source) {
-        cafeteriaName = source.readString();
+        cafeteriaCode = source.readString();
         date = source.readParcelable(Date.class.getClassLoader());
         contents = source.createStringArray();
     }
@@ -39,7 +39,11 @@ public class DailyMenu implements Comparable<DailyMenu>, Parcelable {
         }
     };
 
-    public String get(int dayTime) {
+    public String getContents() {
+        return getContent(BREAKFAST) + SEPARATOR + getContent(LUNCH) + SEPARATOR + getContent(DINNER);
+    }
+
+    public String getContent(int dayTime) {
         try {
             return contents[dayTime];
         } catch (IndexOutOfBoundsException e) {
@@ -48,20 +52,20 @@ public class DailyMenu implements Comparable<DailyMenu>, Parcelable {
         }
     }
 
-    public void setContents(String rawString, String unknown) {
+    public void setContents(String rawString) {
         String[] contents = rawString
                 .replace(SEPARATOR, DUMMY + SEPARATOR + DUMMY)
                 .split("\\" + SEPARATOR);
-        setContents(contents, unknown);
+        setContents(contents);
     }
 
-    public void setContents(String[] contents, String unknown) {
+    public void setContents(String[] contents) {
         try {
             if (contents.length != 3) {
                 throw new Exception("InvalidMenuArgumentException: " + contents.length);
             }
             for (int i = 0; i < contents.length; i++) {
-                String item = format(contents[i], unknown);
+                String item = format(contents[i]);
                 this.contents[i] = item;
             }
         } catch (Exception e) {
@@ -69,18 +73,18 @@ public class DailyMenu implements Comparable<DailyMenu>, Parcelable {
         }
     }
 
-    public void setContent(int order, String content, String unknown) {
-        if (contents[order] == null) {
-            contents[order] = format(content, unknown);
-        } else if (!format(content, unknown).equals(unknown)){
-            contents[order] += " " + format(content, unknown);
+    public void setContent(int dayTime, String content) {
+        if (contents[dayTime] == null) {
+            contents[dayTime] = format(content);
+        } else if (!format(content).equals("")){
+            contents[dayTime] += " " + format(content);
         }
     }
 
-    private String format(String string, String unknown) {
-        if (string == null) return unknown;
+    private String format(String string) {
+        if (string == null) return "";
         string = string
-                .replaceAll(" ([0-9]+) ", " <$1> ")
+                .replaceAll(" ([1-9][0-9]+0+) ", " <$1> ")
                 .replace("ⓐ", "<1700>")
                 .replace("ⓑ", "<2000>")
                 .replace("ⓒ", "<2500>")
@@ -94,11 +98,7 @@ public class DailyMenu implements Comparable<DailyMenu>, Parcelable {
                 .replaceAll("[^가-힣0-9<> ]", "")
                 .replaceAll("  ", " ")
                 .trim();
-        return string.equals("") ? unknown : string;
-    }
-
-    public String getContents() {
-        return contents[BREAKFAST] + SEPARATOR + contents[LUNCH] + SEPARATOR + contents[DINNER];
+        return string;
     }
 
     public Date getDate() {
@@ -109,12 +109,12 @@ public class DailyMenu implements Comparable<DailyMenu>, Parcelable {
         this.date = date;
     }
 
-    public String getCafeteriaName() {
-        return cafeteriaName;
+    public String getCafeteriaCode() {
+        return cafeteriaCode;
     }
 
-    public void setCafeteriaName(String cafeteriaName) {
-        this.cafeteriaName = cafeteriaName;
+    public void setCafeteriaCode(String cafeteriaCode) {
+        this.cafeteriaCode = cafeteriaCode;
     }
 
     public String toString() {return null;}
@@ -131,7 +131,7 @@ public class DailyMenu implements Comparable<DailyMenu>, Parcelable {
 
     @Override
     public void writeToParcel(Parcel destination, int flags) {
-        destination.writeString(cafeteriaName);
+        destination.writeString(cafeteriaCode);
         destination.writeParcelable(date, 1);
         destination.writeStringArray(contents);
     }

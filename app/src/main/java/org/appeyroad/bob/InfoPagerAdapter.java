@@ -3,7 +3,7 @@ package org.appeyroad.bob;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,11 +17,11 @@ public class InfoPagerAdapter extends FragmentStatePagerAdapter {
     private int todayPage;
 
     InfoPagerAdapter(Context context, Cafeteria cafeteria, int backgroundColor) {
-        super(((ActionBarActivity)context).getSupportFragmentManager());
+        super(((AppCompatActivity)context).getSupportFragmentManager());
         this.context = context;
         this.cafeteria = cafeteria;
         this.backgroundColor = backgroundColor;
-        cafeteria.parse(cafeteria.getName(), context);
+        cafeteria.identifyBy(cafeteria.getCode(), context);
         dailyMenus = new ArrayList<>();
         reloadData();
         for (int i = 0; i < dailyMenus.size(); i++) {

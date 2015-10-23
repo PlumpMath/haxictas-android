@@ -5,8 +5,18 @@
     tools:activity=".InfoActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/root"
     android:orientation="vertical"
-    android:background="@color/white70">
+    android:background="@color/white100">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:alpha="0.1"
+        android:tint="@color/black26"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,5 +42,16 @@
             android:clipToPadding="false" />
 
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_action_star_outline"
+        android:tint="@color/white100"/>
+
 
 </RelativeLayout>

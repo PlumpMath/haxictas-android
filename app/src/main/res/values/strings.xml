@@ -9,10 +9,10 @@
     <string name="title_activity_map">지도 보기</string>
 
     <string name="retry">재시도</string>
-    <string name="exit">종료</string>
+    <string name="quit">종료</string>
     <string name="open_time">영업 시간</string>
     <string name="bookmarks">북마크</string>
-    <string name="main">전체</string>
+    <string name="main">학나빛</string>
     <string name="see_more">더 보기</string>
     <string name="breakfast">아침</string>
     <string name="lunch">점심</string>
@@ -23,7 +23,7 @@
     <string name="weekend">주말</string>
     <string name="unknown">정보 없음</string>
     <string name="info">앱 정보</string>
-    <string name="email">이메일 보내기</string>
+    <string name="send_message">메시지 보내기</string>
     <string name="facebook">페이스북 페이지</string>
     <string name="view_mode_full">"기본 모드로 전환하여
 식당 정보 자세히 보기"</string>
@@ -49,14 +49,16 @@
     <string name="about_details">"서울대학교 중앙동아리
 AppeyRoad 제작
 2015년 겨울방학 프로젝트"</string>
-    <string name="about_details_more">"안드로이드 5.0 롤리팝에
-최적화되어 있습니다."</string>
+    <string name="about_details_more">"안드로이드 5.1 롤리팝에 최적화"</string>
     <string name="about_jsoup">"jsoup MIT 라이선스 전문
 http://jsoup.org/license"</string>
     <!--<string name="license">"CC BY-NC-SA 3.0"</string>-->
     <string name="confirm">확인</string>
 
     <string name="email_subject">개발자에게 보내는 메일!</string>
-    <string name="choose_app">앱을 선택해 주세요.</string>
+    <string name="select_app">앱을 선택해 주세요.</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>

@@ -3,6 +3,7 @@ package org.appeyroad.bob;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Guanadah on 2015-01-29.
@@ -63,9 +66,9 @@ public class InfoPagerFragment extends Fragment {
         setLabel(breakfastLabel, getString(R.string.breakfast), cafeteria.getBreakfastTime());
         setLabel(lunchLabel, getString(R.string.lunch), cafeteria.getLunchTime());
         setLabel(dinnerLabel, getString(R.string.dinner), cafeteria.getDinnerTime());
-        breakfastList.setAdapter(new MenuListAdapter(dailyMenu.get(DailyMenu.BREAKFAST)));
-        lunchList.setAdapter(new MenuListAdapter(dailyMenu.get(DailyMenu.LUNCH)));
-        dinnerList.setAdapter(new MenuListAdapter(dailyMenu.get(DailyMenu.DINNER)));
+        breakfastList.setAdapter(new MenuListAdapter(dailyMenu.getContent(DailyMenu.BREAKFAST)));
+        lunchList.setAdapter(new MenuListAdapter(dailyMenu.getContent(DailyMenu.LUNCH)));
+        dinnerList.setAdapter(new MenuListAdapter(dailyMenu.getContent(DailyMenu.DINNER)));
 
         return view;
     }
@@ -126,15 +129,16 @@ public class InfoPagerFragment extends Fragment {
         private static final String ITEM_SEPARATOR = "<";
         private static final String FIELD_SEPARATOR = ">";
 
-        private ArrayList<String> data;
+        private List<String> data;
 
         MenuListAdapter(String source) {
             data = new ArrayList<>();
-
-            for (String item : source.split(ITEM_SEPARATOR)) {
-                if (!item.equals("")) {
-                    data.add(item);
+            if (source.contains(ITEM_SEPARATOR)) {
+                for (String e : source.split(ITEM_SEPARATOR)) {
+                    if (!e.equals("")) data.add(e);
                 }
+            } else {
+                data.add("");
             }
         }
 
@@ -172,7 +176,8 @@ public class InfoPagerFragment extends Fragment {
                 price.setVisibility(View.GONE);
             }
 
-            if (item.getText().toString().equals(getString(R.string.unknown))) {
+            if (item.getText().toString().equals("")) {
+                item.setText(getString(R.string.unknown));
                 item.setTextColor(getResources().getColor(R.color.black26));
                 item.setGravity(Gravity.CENTER);
             } else {

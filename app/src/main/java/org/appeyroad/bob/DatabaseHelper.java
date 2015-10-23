@@ -17,13 +17,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String MENU = "menu";
 
     private static final String CAFETERIA_COLUMNS
-            = "(id INTEGER PRIMARY KEY, name TEXT, coordinate TEXT, " +
+            = "(id INTEGER PRIMARY KEY, code TEXT, coordinate TEXT, " +
             "breakfastTime TEXT, lunchTime TEXT, dinnerTime TEXT)";
     private static final String MENU_COLUMNS
-            = "(id INTEGER PRIMARY KEY, cafeteriaName TEXT, date TEXT, contents TEXT)";
+            = "(id INTEGER PRIMARY KEY, cafeteriaCode TEXT, date TEXT, contents TEXT)";
 
-    private static final String DATABASE = "SeoulNationalUniversity";
-    private static final int VERSION = 5;
+    private static final String DATABASE = "Haxictas";
+    private static final int VERSION = 1;
 
     private static DatabaseHelper instance;
     private static Context latestContext;
@@ -62,24 +62,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void delete(Cafeteria cafeteria){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(String.format(
-                "DELETE FROM %s WHERE name = '%s';",
-                BOOKMARK, cafeteria.getName()
+                "DELETE FROM %s WHERE code = '%s';",
+                BOOKMARK, cafeteria.getCode()
         ));
         db.execSQL(String.format(
-                "DELETE FROM %s WHERE name = '%s';",
-                CAFETERIA, cafeteria.getName()
+                "DELETE FROM %s WHERE code = '%s';",
+                CAFETERIA, cafeteria.getCode()
         ));
         db.execSQL(String.format(
-                "DELETE FROM %s WHERE cafeteriaName = '%s';",
-                MENU, cafeteria.getName()
+                "DELETE FROM %s WHERE cafeteriaCode = '%s';",
+                MENU, cafeteria.getCode()
         ));
     }
 
     public void toggleBookmark(Cafeteria cafeteria) {
         if (getBookmarkedCafeterias().contains(cafeteria)) {
             getWritableDatabase().execSQL(String.format(
-                    "DELETE FROM %s WHERE name = '%s';",
-                    BOOKMARK, cafeteria.getName()
+                    "DELETE FROM %s WHERE code = '%s';",
+                    BOOKMARK, cafeteria.getCode()
             ));
         } else {
             insert(cafeteria, BOOKMARK);
@@ -101,23 +101,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             SQLiteDatabase db = getWritableDatabase();
             cursor = db.rawQuery(String.format(
-                    "SELECT * FROM %s WHERE name = '%s';",
-                    tableName, cafeteria.getName()
+                    "SELECT * FROM %s WHERE code = '%s';",
+                    tableName, cafeteria.getCode()
             ), null);
             if (cursor != null && cursor.moveToFirst()) {
                 db.execSQL(String.format(
                         "UPDATE %s SET breakfastTime = '%s', lunchTime = '%s', " +
-                                "dinnerTime = '%s', coordinate = '%s' WHERE name = '%s'",
+                                "dinnerTime = '%s', coordinate = '%s' WHERE code = '%s'",
                         tableName, cafeteria.getBreakfastTime(), cafeteria.getLunchTime(),
-                        cafeteria.getDinnerTime(), cafeteria.getCoordinate(), cafeteria.getName()
+                        cafeteria.getDinnerTime(), cafeteria.getCoordinate(), cafeteria.getCode()
                 ));
             } else {
                 db.execSQL(String.format(
-                        "DELETE FROM %s WHERE name = '%s';",
-                        tableName, cafeteria.getName()
+                        "DELETE FROM %s WHERE code = '%s';",
+                        tableName, cafeteria.getCode()
                 ));
                 ContentValues values = new ContentValues();
-                values.put("name", cafeteria.getName());
+                values.put("code", cafeteria.getCode());
                 values.put("breakfastTime", cafeteria.getBreakfastTime());
                 values.put("lunchTime", cafeteria.getLunchTime());
                 values.put("dinnerTime", cafeteria.getDinnerTime());
@@ -152,11 +152,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.moveToFirst();
                 do {
                     Cafeteria cafeteria = new Cafeteria();
-                    cafeteria.setName(cursor.getString(cursor.getColumnIndex("name")));
+                    cafeteria.setCode(cursor.getString(cursor.getColumnIndex("code")));
                     cafeteria.setCoordinate(cursor.getString(cursor.getColumnIndex("coordinate")));
                     cafeteria.setBreakfastTime(cursor.getString(cursor.getColumnIndex("breakfastTime")));
                     cafeteria.setLunchTime(cursor.getString(cursor.getColumnIndex("lunchTime")));
                     cafeteria.setDinnerTime(cursor.getString(cursor.getColumnIndex("dinnerTime")));
+                    cafeteria.identifyBy(cafeteria.getCode(), latestContext);
                     list.add(cafeteria);
                 } while (cursor.moveToNext());
             }
@@ -173,12 +174,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void insert(DailyMenu dailyMenu) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("cafeteriaName", dailyMenu.getCafeteriaName());
+        values.put("cafeteriaCode", dailyMenu.getCafeteriaCode());
         values.put("date", dailyMenu.getDate().toString());
         values.put("contents", dailyMenu.getContents());
         db.execSQL(String.format(
-                "DELETE FROM %s WHERE cafeteriaName = '%s' AND date = '%s' AND contents = '%s';",
-                MENU, dailyMenu.getCafeteriaName(), dailyMenu.getDate().toString(), dailyMenu.getContents()
+                "DELETE FROM %s WHERE cafeteriaCode = '%s' AND date = '%s';",
+                MENU, dailyMenu.getCafeteriaCode(), dailyMenu.getDate().toString()
         ));
         db.insert(MENU, null, values);
 
@@ -234,17 +235,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         DailyMenu dailyMenu = null;
         try {
             cursor = getReadableDatabase().rawQuery(String.format(
-                    "SELECT * FROM %s WHERE cafeteriaName = '%s' AND date = '%s'",
-                    MENU, cafeteria.getName(), date.toString()
+                    "SELECT * FROM %s WHERE cafeteriaCode = '%s' AND date = '%s'",
+                    MENU, cafeteria.getCode(), date.toString()
             ), null);
             if (cursor != null && cursor.moveToFirst()) {
                 dailyMenu = new DailyMenu();
-                dailyMenu.setCafeteriaName(cursor.getString(cursor.getColumnIndex("cafeteriaName")));
+                dailyMenu.setCafeteriaCode(cursor.getString(cursor.getColumnIndex("cafeteriaCode")));
                 dailyMenu.setDate(new Date(cursor.getString(cursor.getColumnIndex("date"))));
-                dailyMenu.setContents(cursor.getString(cursor.getColumnIndex("contents")),
-                        latestContext.getString(R.string.unknown));
-            } else {
-                //Log.d("DB", "retrieving menus from " + cafeteria.getName() + " at " + date.toString() + " failed");
+                dailyMenu.setContents(cursor.getString(cursor.getColumnIndex("contents")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -261,19 +259,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<DailyMenu> dailyMenus = new ArrayList<>();
         try {
             cursor = getReadableDatabase().rawQuery(String.format(
-                    "SELECT * FROM %s WHERE cafeteriaName = '%s';", MENU, cafeteria.getName()
+                    "SELECT * FROM %s WHERE cafeteriaCode = '%s';",
+                    MENU, cafeteria.getCode()
             ), null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     DailyMenu dailyMenu = new DailyMenu();
-                    dailyMenu.setCafeteriaName(cursor.getString(cursor.getColumnIndex("cafeteriaName")));
+                    dailyMenu.setCafeteriaCode(cursor.getString(cursor.getColumnIndex("cafeteriaCode")));
                     dailyMenu.setDate(new Date(cursor.getString(cursor.getColumnIndex("date"))));
-                    dailyMenu.setContents(cursor.getString(cursor.getColumnIndex("contents")),
-                            latestContext.getString(R.string.unknown));
+                    dailyMenu.setContents(cursor.getString(cursor.getColumnIndex("contents")));
                     dailyMenus.add(dailyMenu);
                 } while (cursor.moveToNext());
-            } else {
-                //Log.d("DB", "retrieving menus from " + cafeteria.getName() + " failed");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -297,14 +293,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.moveToFirst();
                 do {
                     DailyMenu dailyMenu = new DailyMenu();
-                    dailyMenu.setCafeteriaName(cursor.getString(cursor.getColumnIndex("cafeteriaName")));
+                    dailyMenu.setCafeteriaCode(cursor.getString(cursor.getColumnIndex("cafeteriaCode")));
                     dailyMenu.setDate(new Date(cursor.getString(cursor.getColumnIndex("date"))));
-                    dailyMenu.setContents(cursor.getString(cursor.getColumnIndex("contents")),
-                            latestContext.getString(R.string.unknown));
+                    dailyMenu.setContents(cursor.getString(cursor.getColumnIndex("contents")));
                     dailyMenus.add(dailyMenu);
                 } while (cursor.moveToNext());
-            } else {
-                //Log.d("DB", "retrieving menus at " + date.toString() + " failed");
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class CafeteriasAdapter extends BaseAdapter {
@@ -71,11 +73,11 @@ public class CafeteriasAdapter extends BaseAdapter {
             dinner = (TextView)convertView.findViewById(R.id.dinner);
             if (dailyMenu == null) {
                 dailyMenu = new DailyMenu();
-                dailyMenu.setContents("NULL|NULL|NULL", context.getString(R.string.unknown));
+                dailyMenu.setContents("NULL|NULL|NULL");
             }
-            formatTextView(breakfast, context.getString(R.string.breakfast), dailyMenu.get(DailyMenu.BREAKFAST));
-            formatTextView(lunch, context.getString(R.string.lunch), dailyMenu.get(DailyMenu.LUNCH));
-            formatTextView(dinner, context.getString(R.string.dinner), dailyMenu.get(DailyMenu.DINNER));
+            formatTextView(breakfast, context.getString(R.string.breakfast), dailyMenu.getContent(DailyMenu.BREAKFAST));
+            formatTextView(lunch, context.getString(R.string.lunch), dailyMenu.getContent(DailyMenu.LUNCH));
+            formatTextView(dinner, context.getString(R.string.dinner), dailyMenu.getContent(DailyMenu.DINNER));
         }
 
         name.setText(cafeteria.getName());
@@ -104,16 +106,22 @@ public class CafeteriasAdapter extends BaseAdapter {
         DatabaseHelper helper = DatabaseHelper.getInstance(context);
         cafeterias.addAll((dataType == ALL) ?
                 helper.getAllCafeterias() : helper.getBookmarkedCafeterias());
-        Log.d("CA", "load data from " + (dataType == ALL ? "ALL" : "BOOKMARKS"));
+        Collections.sort(cafeterias, new Comparator<Cafeteria>() {
+            @Override
+            public int compare(Cafeteria lhs, Cafeteria rhs) {
+                return lhs.getCode().compareTo(rhs.getCode());
+            }
+        });
         notifyDataSetChanged();
     }
 
     public void formatTextView(TextView textView, String time, String menu) {
         textView.setText(time + " " + menu.replaceAll("<.+?>", ""));
-        if (menu.equals(context.getString(R.string.unknown))) {
-            textView.setTextColor(context.getResources().getColor(R.color.white30));
+        if (menu.equals("")) {
+            textView.setText(context.getString(R.string.unknown));
+            textView.setTextColor(context.getResources().getColor(R.color.black26));
         } else {
-            textView.setTextColor(context.getResources().getColor(R.color.white100));
+            textView.setTextColor(context.getResources().getColor(R.color.black87));
         }
     }
 

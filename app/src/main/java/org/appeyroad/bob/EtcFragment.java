@@ -67,10 +67,19 @@ public class EtcFragment extends Fragment {
         email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto","guanadah@gmail.com", null));
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, activity.getString(R.string.email_subject));
                 startActivity(Intent.createChooser(emailIntent, activity.getString(R.string.choose_app)));
+                */
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                try {
+                    intent.setData(Uri.parse("fb://profile/"));
+                } catch (Exception e) {
+                    intent.setData(Uri.parse("http://https://www.facebook.com/AppeyRoad"));
+                }
+                startActivity(intent);
             }
         });
         facebook.setOnClickListener(new View.OnClickListener() {
@@ -78,9 +87,9 @@ public class EtcFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 try {
-                    intent.setData(Uri.parse("fb://page/212518382143039"));
+                    intent.setData(Uri.parse("fb://page/348690058615630"));
                 } catch (Exception e) {
-                    intent.setData(Uri.parse("http://https://www.facebook.com/AppeyRoad"));
+                    intent.setData(Uri.parse("https://www.facebook.com/arandommeaninglessusername"));
                 }
                 startActivity(intent);
             }
