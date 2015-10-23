@@ -28,7 +28,7 @@ public class Preferences {
     }
 
     public static int getViewMode(Context context, int dataType) {
-        return get(context, getKeyFromInteger(dataType) + VIEW_MODE, CafeteriasAdapter.SIMPLE);
+        return get(context, getKeyFromInteger(dataType) + VIEW_MODE, CafeteriasAdapter.FULL);
     }
 
     public static void saveAppVersion(Context context) {

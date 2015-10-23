@@ -116,7 +116,7 @@ public class CafeteriasAdapter extends BaseAdapter {
     }
 
     public void formatTextView(TextView textView, String time, String menu) {
-        textView.setText(time + " " + menu.replaceAll("<.+?>", ""));
+        textView.setText(menu.replaceAll("<.+?>", ""));
         if (menu.equals("")) {
             textView.setText(context.getString(R.string.unknown));
             textView.setTextColor(context.getResources().getColor(R.color.black26));

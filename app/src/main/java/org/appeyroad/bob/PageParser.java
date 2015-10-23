@@ -100,7 +100,7 @@ public class PageParser {
 
                         date = new Date(dateInWeek);
                         while (date.get(Calendar.DAY_OF_WEEK) != dayOfWeek + 1) {
-                            date.add(Calendar.DAY_OF_WEEK, 1);
+                            date.add(Calendar.DAY_OF_WEEK, date.get(Calendar.DAY_OF_WEEK) < dayOfWeek ? 1 : -1);
                         }
                         dailyMenu.setDate(date);
 

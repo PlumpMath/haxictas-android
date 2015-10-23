@@ -138,7 +138,7 @@ public class InfoPagerFragment extends Fragment {
                     if (!e.equals("")) data.add(e);
                 }
             } else {
-                data.add("");
+                data.add(source);
             }
         }
 

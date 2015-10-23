@@ -23,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             = "(id INTEGER PRIMARY KEY, cafeteriaCode TEXT, date TEXT, contents TEXT)";
 
     private static final String DATABASE = "Haxictas";
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
 
     private static DatabaseHelper instance;
     private static Context latestContext;
