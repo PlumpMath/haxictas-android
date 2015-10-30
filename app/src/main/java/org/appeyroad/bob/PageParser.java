@@ -94,12 +94,12 @@ public class PageParser {
                     List<DailyMenu> weeklyMenus = new ArrayList<>();
 
                     Date date;
-                    for (int dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+                    for (int dayOfWeek = Calendar.SUNDAY; dayOfWeek <= Calendar.SATURDAY; dayOfWeek++) {
                         DailyMenu dailyMenu = new DailyMenu();
                         dailyMenu.setCafeteriaCode(ourHome.getCode());
 
                         date = new Date(dateInWeek);
-                        while (date.get(Calendar.DAY_OF_WEEK) != dayOfWeek + 1) {
+                        while (date.get(Calendar.DAY_OF_WEEK) != dayOfWeek) {
                             date.add(Calendar.DAY_OF_WEEK, date.get(Calendar.DAY_OF_WEEK) < dayOfWeek ? 1 : -1);
                         }
                         dailyMenu.setDate(date);

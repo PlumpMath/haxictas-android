@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class SplashActivity extends Activity {
 
-    private static final int DELAY = 500;
+    private static final int DELAY = 300;
     private DatabaseHelper helper;
 
     @Override
